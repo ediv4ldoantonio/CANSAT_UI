@@ -66,6 +66,9 @@ public partial class App : Application
             services.AddScoped<Views.Pages.Connection>();
             services.AddScoped<ConnectionViewModel>();
 
+            services.AddScoped<Views.Pages.Dashboard>();
+            services.AddScoped<DashboardViewModel>();
+
         })
         .Build();
 

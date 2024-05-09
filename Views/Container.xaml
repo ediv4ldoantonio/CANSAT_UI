@@ -28,6 +28,13 @@
                             <ui:SymbolIcon Symbol="SerialPort24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
+
+                    <ui:NavigationViewItem Content="Dashboard" 
+                       TargetPageType="{x:Type pages:Dashboard}">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="GridCircles24" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
                 </ui:NavigationView.MenuItems>
                 <ui:NavigationView.FooterMenuItems>
                     <ui:NavigationViewItem Content="Definições">
