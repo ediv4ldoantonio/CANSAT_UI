@@ -4,11 +4,98 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CANSAT_UI.Views.Pages"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
 
-    <Grid>
-        <TextBlock Text="Dashboard"/>
+    <Grid ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <!-- Temperature -->
+            <Border Width="Auto" Margin="10" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Temperatura" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
+                        <ui:SymbolIcon Symbol="Temperature24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Grid.Column="1" Text="12 ºC" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
+
+            <!-- Location -->
+            <Border Grid.Column="1" Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Localização" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
+                        <ui:SymbolIcon Symbol="Location24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  Text="-22.34, -13,19" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
+            
+            <!-- Date -->
+            <Border Grid.Column="2" Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Data" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
+                        <ui:SymbolIcon Symbol="CalendarDay24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  Text="10/05/2024" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid Grid.Column="0">
+                <Border CornerRadius="10" Margin="20" Background="#FF4D869C">
+                    <lvc:CartesianChart Margin="10">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Values="-12,12,-2,10,23,45" 
+                                StrokeThickness="2" 
+                                Stroke="#1DF2C5" 
+                                Fill="#9938A8C5" 
+                                LineSmoothness="1" 
+                                PointGeometrySize="10"/>
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="True" Labels="Seg,Ter,Qua,Qui,Sex,Sab,Dom">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator StrokeThickness="0" Step="1"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="True" MinValue="-80" MaxValue="80">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator StrokeThickness="0"/>
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                </Border>
+            </Grid>
+            
+        </Grid>
     </Grid>
 </Page>
