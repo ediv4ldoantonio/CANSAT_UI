@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CANSAT_UI.Views.Pages"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" xmlns:viewmodels="clr-namespace:CANSAT_UI.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Dashboard">
@@ -20,9 +20,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!-- Temperature -->
-            <Border Width="Auto" Margin="10" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+            <Border Width="Auto" Grid.Column="0" Margin="10" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -32,12 +33,27 @@
                         <TextBlock Text="Temperatura" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
                         <ui:SymbolIcon Symbol="Temperature24" Foreground="White" FontSize="80"/>
                     </StackPanel>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Grid.Column="1" Text="12 ºC" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="1" Text="{Binding Temperature}" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
+
+            <!-- Humidity -->
+            <Border Width="Auto" Grid.Column="1" Margin="10" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Úmidade" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
+                        <ui:SymbolIcon Symbol="WeatherRain24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Grid.Column="1" Text="{Binding Humidity}" FontWeight="Bold" Foreground="White"/>
                 </Grid>
             </Border>
 
             <!-- Location -->
-            <Border Grid.Column="1" Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+            <Border Grid.Column="2" Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -47,12 +63,13 @@
                         <TextBlock Text="Localização" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
                         <ui:SymbolIcon Symbol="Location24" Foreground="White" FontSize="80"/>
                     </StackPanel>
-                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  Text="-22.34, -13,19" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Location}" FontWeight="Bold" Foreground="White"/>
                 </Grid>
             </Border>
             
             <!-- Date -->
-            <Border Grid.Column="2" Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
+            <Border Grid.Column="3
+                    " Margin="10" Width="Auto" MinHeight="100" Background="#FF4D869C" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -62,7 +79,7 @@
                         <TextBlock Text="Data" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF32012F"/>
                         <ui:SymbolIcon Symbol="CalendarDay24" Foreground="White" FontSize="80"/>
                     </StackPanel>
-                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"  Text="10/05/2024" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Date}" FontWeight="Bold" Foreground="White"/>
                 </Grid>
             </Border>
         </Grid>
