@@ -21,7 +21,7 @@
             </StackPanel>
             <ui:ProgressRing IsIndeterminate="True" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </Grid>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" Foreground="White" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DisconnectCommand}">
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,20,0" Foreground="#FF1F83E0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanToVisibilityConverter}}" Command="{Binding DisconnectCommand}">
             <ui:SymbolIcon Symbol="PlugConnected24" FontSize="30"/>
         </Button>
     </Grid>

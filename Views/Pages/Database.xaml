@@ -17,7 +17,6 @@
                     <ui:GridViewColumn  Header="Timestamp" DisplayMemberBinding="{Binding Timestamp}" />
                     <ui:GridViewColumn  Header="Humidade" DisplayMemberBinding="{Binding Humidity}" />
                     <ui:GridViewColumn  Header="Temperatura" DisplayMemberBinding="{Binding Temperature}" />
-                    <ui:GridViewColumn  Header="Pressão Atmosférica" DisplayMemberBinding="{Binding AtmosphericPression}" />
                     <ui:GridViewColumn  Header="Pressão Localização" DisplayMemberBinding="{Binding Location}" />
                 </ui:GridView>
             </ui:ListView.View>

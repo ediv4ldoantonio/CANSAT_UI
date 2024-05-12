@@ -12,15 +12,14 @@ public class MySQLDataRepository : IDataRepository
     {
         using var connection = new MySqlConnection(CONNECTION_STRING);
         await connection.OpenAsync();
-        string query = "INSERT INTO data (Location, Date, Time, Temperature, Humidity, AtmosphericPression, Timestamp) " +
-                       "VALUES (@Location, @Date, @Time, @Temperature, @Humidity, @AtmosphericPression, @Timestamp)";
+        string query = "INSERT INTO data (Location, Date, Time, Temperature, Humidity, Timestamp) " +
+                       "VALUES (@Location, @Date, @Time, @Temperature, @Humidity, @Timestamp)";
         using MySqlCommand command = new(query, connection);
         command.Parameters.AddWithValue("@Location", data.Location);
         command.Parameters.AddWithValue("@Date", data.Date);
         command.Parameters.AddWithValue("@Time", data.Time);
         command.Parameters.AddWithValue("@Temperature", data.Temperature);
         command.Parameters.AddWithValue("@Humidity", data.Humidity);
-        command.Parameters.AddWithValue("@AtmosphericPression", data.AtmosphericPression);
         command.Parameters.AddWithValue("@Timestamp", data.Timestamp);
 
         await command.ExecuteNonQueryAsync();
@@ -46,7 +45,6 @@ public class MySQLDataRepository : IDataRepository
                     Time = reader["Time"].ToString()!,
                     Temperature = Convert.ToDouble(reader["Temperature"]),
                     Humidity = Convert.ToDouble(reader["Humidity"]),
-                    AtmosphericPression = Convert.ToDouble(reader["AtmosphericPression"]),
                     Timestamp = Convert.ToDateTime(reader["Timestamp"])
                 };
                 dataList.Add(data);
