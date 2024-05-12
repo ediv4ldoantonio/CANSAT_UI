@@ -12,9 +12,9 @@
     <Grid>
         <Grid>
             <StackPanel IsEnabled="{Binding IsConnected, Converter={StaticResource BooleanInverterConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="240">
-                    <TextBlock Text="Porta" FontSize="18" FontWeight="Bold" Margin="0, 0, 0, 5" />
+                    <TextBlock Text="Porta" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0, 0, 0, 5" />
                     <ComboBox Margin="0, 0, 0, 10" ItemsSource="{Binding AvailablePorts}" SelectedItem="{Binding PortName}"/>
-                    <TextBlock Text="Baud Rate" FontSize="18" FontWeight="Bold" Margin="0, 0, 0, 5" />
+                    <TextBlock Text="Baud Rate" Foreground="White" FontSize="18" FontWeight="Bold" Margin="0, 0, 0, 5" />
                     <ComboBox Margin="0, 0, 0, 20" ItemsSource="{Binding BaudRatesOptions}" SelectedItem="{Binding BaudRate}"/>
 
                 <ui:Button HorizontalAlignment="Stretch" Margin="0,0,0,10" Content="Conectar" Appearance="Primary" Command="{Binding ConnectCommand}" />

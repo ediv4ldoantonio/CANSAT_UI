@@ -11,115 +11,104 @@
       Title="Dashboard">
 
     <Grid>
-        <Grid VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <!-- Temperature -->
-                <Border Width="Auto" Grid.Row="0" Margin="10" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Temperatura" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="Black"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="Temperature24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="1" Text="{Binding Temperature}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
 
-                <!-- Humidity -->
-                <Border Width="Auto" Grid.Row="1" Margin="10" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Humidade" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="WeatherRain24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Grid.Column="1" Text="{Binding Humidity}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
+            <!-- Temperature -->
+            <Border Width="Auto" Grid.Column="0" Margin="10" MinHeight="100" Background="#FF5AB2FF" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Temperatura" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="Black"/>
+                        <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="Temperature24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="1" Text="{Binding Temperature}" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
 
-                <!-- Pressao Atmosferica -->
-                <Border Width="Auto" Grid.Row="2" Margin="10" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Pressão Atmosférica" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="WeatherCloudy24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Column="1" Text="{Binding Temperature}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
-            </Grid>
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <!-- Date -->
-                <Border Grid.Row="0" Margin="10" Width="Auto" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Data" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="CalendarDay24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Date}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
+            <!-- Humidity -->
+            <Border Width="Auto" Grid.Column="1" Margin="10" MinHeight="100" Background="#FF5AB2FF" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Humidade" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
+                        <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="WeatherRain24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Grid.Column="1" Text="{Binding Humidity}" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
 
-                <!-- Time -->
-                <Border Grid.Row="1" Margin="10" Width="Auto" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Tempo" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="Clock24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Time}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
-
-
-                <!-- Location -->
-                <Border Grid.Row="2" Margin="10" Width="Auto" MinHeight="100" Background="#FF1F83E0" CornerRadius="10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                            <TextBlock Text="Localização" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
-                            <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="Location24" Foreground="White" FontSize="80"/>
-                        </StackPanel>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Location}" FontWeight="Bold" Foreground="White"/>
-                    </Grid>
-                </Border>
-            </Grid>
+            <!-- Date -->
+            <Border Grid.Column="2" Margin="10" Width="Auto" MinHeight="100" Background="#FF5AB2FF" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Data" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
+                        <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="CalendarDay24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Date}" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
+            
+            <!-- Location -->
+            <Border Grid.Column="3" Margin="10" Width="Auto" MinHeight="100" Background="#FF5AB2FF" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <TextBlock Text="Localização" Margin="10,10,0,10" FontWeight="Bold" FontSize="20" Foreground="#FF000000"/>
+                        <ui:SymbolIcon Margin="15,0,0,0" HorizontalAlignment="Left" Symbol="Location24" Foreground="White" FontSize="80"/>
+                    </StackPanel>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"  Text="{Binding Location}" FontWeight="Bold" Foreground="White"/>
+                </Grid>
+            </Border>
         </Grid>
+        <Border Grid.Row="1" Background="#FF5AB2FF" CornerRadius="10" Margin="10,0,10,0">
+            <lvc:CartesianChart>
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries Values="{Binding TemperatureValues}" 
+                       StrokeThickness="4" 
+                       StrokeDashArray="2" 
+                       Stroke="#6BBA45" 
+                       Fill="Transparent" 
+                       LineSmoothness="0" 
+                       PointGeometry="{x:Null}" />
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis ShowLabels="False">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator StrokeThickness="0"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis MinValue="-40" MaxValue="80">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator StrokeThickness="0"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Border>
     </Grid>
 </Page>

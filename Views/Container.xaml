@@ -20,7 +20,7 @@
 
             <!--  This is the main navigation of the application.  -->
             <ui:NavigationView x:Name="RootNavigation" Grid.Column="1" OpenPaneLength="170"
-                                IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False" IsPaneOpen="False">
+                                IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False">
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem Content="Conexão" 
                                            TargetPageType="{x:Type pages:Connection}">
