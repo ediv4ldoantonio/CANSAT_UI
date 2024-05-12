@@ -20,7 +20,7 @@
 
             <!--  This is the main navigation of the application.  -->
             <ui:NavigationView x:Name="RootNavigation" Grid.Column="1" OpenPaneLength="170"
-                                IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False">
+                                IsBackButtonVisible="Collapsed" IsPaneToggleVisible="False" IsPaneOpen="False">
                 <ui:NavigationView.MenuItems>
                     <ui:NavigationViewItem Content="Conexão" 
                                            TargetPageType="{x:Type pages:Connection}">
@@ -36,13 +36,6 @@
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
                 </ui:NavigationView.MenuItems>
-                <ui:NavigationView.FooterMenuItems>
-                    <ui:NavigationViewItem Content="Definições">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Settings24" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                </ui:NavigationView.FooterMenuItems>
             </ui:NavigationView>
         </Grid>
     </Grid>
