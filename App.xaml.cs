@@ -9,6 +9,7 @@ using Wpf.Ui;
 using CANSAT_UI.Services.Contracts;
 using System.IO.Ports;
 using CANSAT_UI.ViewModels;
+using CANSAT_UI.Repositories;
 
 namespace CANSAT_UI;
 
@@ -69,6 +70,11 @@ public partial class App : Application
             services.AddScoped<Views.Pages.Dashboard>();
             services.AddScoped<DashboardViewModel>();
 
+            services.AddScoped<Views.Pages.Database>();
+            services.AddScoped<DatabaseViewModel>();
+
+            // Repositories
+            services.AddSingleton<IDataRepository, MySQLDataRepository>();
         })
         .Build();
 
