@@ -34,12 +34,25 @@ public partial class DashboardViewModel : ViewModelBase
     const string token = "6ju-aH1fAZD97gvIwbui6qceTEWIF0Fm";
 
     private readonly ISerialCommunicationService serialCommunicationService;
+    private readonly System.Timers.Timer timer;
+    private double _humidity;
+    private double _temperature;
 
     public DashboardViewModel(ISerialCommunicationService serialCommunicationService, IDataRepository dataRepository)
     {
         this.dataRepository = dataRepository;
         this.serialCommunicationService = serialCommunicationService;
         InitializeDataReceived();
+        timer = new()
+        {
+            Interval = 30000
+        };
+        timer.Elapsed += Timer_Elapsed;
+    }
+
+    private async void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+    {
+       await dataRepository.Create(new Data { Date = Date, Humidity = _humidity, Location = Location, Temperature = _temperature, Time = Time, Timestamp = DateTime.Now });
     }
 
     private void InitializeDataReceived()
@@ -61,13 +74,15 @@ public partial class DashboardViewModel : ViewModelBase
                 Time = responseData.time;
                 Humidity = $"{responseData.humidity}%";
 
+                _temperature = responseData.temperature;
+                _humidity = responseData.humidity;
+
                 string pinoVirtual1 = "v0";
                 string pinoVirtual2 = "v1";
                 string pinoVirtual3 = "v2";
                 string pinoVirtual4 = "v3";
                 string pinoVirtual5 = "v4";
 
-                await dataRepository.Create(new Data { Date = Date, Humidity = responseData.humidity, Location = Location, Temperature = responseData.temperature, Time = Time, Timestamp = DateTime.Now });
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={responseData.humidity}");
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={responseData.temperature}");
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={responseData.location}");
