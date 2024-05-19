@@ -4,6 +4,7 @@ using CANSAT_UI.Services.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Net.Http;
 using System.Text.Json;
+using System.Windows;
 
 namespace CANSAT_UI.ViewModels;
 
@@ -25,6 +26,9 @@ public partial class DashboardViewModel : ViewModelBase
 
     [ObservableProperty]
     private string humidity = string.Empty;
+
+    [ObservableProperty]
+    private string gas = string.Empty;
     #endregion
 
     readonly HttpClient client = new HttpClient();
@@ -37,6 +41,7 @@ public partial class DashboardViewModel : ViewModelBase
     private readonly System.Timers.Timer timer;
     private double _humidity;
     private double _temperature;
+    private double _gas;
 
     public DashboardViewModel(ISerialCommunicationService serialCommunicationService, IDataRepository dataRepository)
     {
@@ -52,7 +57,7 @@ public partial class DashboardViewModel : ViewModelBase
 
     private async void Timer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
     {
-       await dataRepository.Create(new Data { Date = Date, Humidity = _humidity, Location = Location, Temperature = _temperature, Time = Time, Timestamp = DateTime.Now });
+        await dataRepository.Create(new Data { Date=Date,Gas=_gas, Humidity=_humidity, Location=Location, Temperature=_temperature, Time=Time, Timestamp=DateTime.Now });
     }
 
     private void InitializeDataReceived()
@@ -73,9 +78,11 @@ public partial class DashboardViewModel : ViewModelBase
                 Date = responseData.date;
                 Time = responseData.time;
                 Humidity = $"{responseData.humidity}%";
+                Gas = $"{responseData.gas}%";
 
                 _temperature = responseData.temperature;
                 _humidity = responseData.humidity;
+                _gas = responseData.gas;
 
                 string pinoVirtual1 = "v0";
                 string pinoVirtual2 = "v1";
@@ -87,12 +94,12 @@ public partial class DashboardViewModel : ViewModelBase
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={responseData.temperature}");
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={responseData.location}");
                 await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual4}={responseData.date}");
-                await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual5}={responseData.time}");
+                await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual5}={responseData.gas}");
             }
         }
-        catch
+        catch(Exception e)
         {
-
+            MessageBox.Show(e.Message);
         }
     }
 }

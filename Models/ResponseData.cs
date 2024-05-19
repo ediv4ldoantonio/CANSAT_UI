@@ -7,4 +7,5 @@ public class ResponseData
     public required string time { get; set; }
     public required double temperature { get; set; }
     public required double humidity { get; set; }
+    public required double gas { get; set; }
 }

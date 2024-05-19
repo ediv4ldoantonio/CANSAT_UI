@@ -12,9 +12,10 @@ public class MySQLDataRepository : IDataRepository
     {
         using var connection = new MySqlConnection(CONNECTION_STRING);
         await connection.OpenAsync();
-        string query = "INSERT INTO data (Location, Date, Time, Temperature, Humidity, Timestamp) " +
-                       "VALUES (@Location, @Date, @Time, @Temperature, @Humidity, @Timestamp)";
+        string query = "INSERT INTO data (Gas, Location, Date, Time, Temperature, Humidity, Timestamp) " +
+                       "VALUES (@Gas, @Location, @Date, @Time, @Temperature, @Humidity, @Timestamp)";
         using MySqlCommand command = new(query, connection);
+        command.Parameters.AddWithValue("@Gas", data.Gas);
         command.Parameters.AddWithValue("@Location", data.Location);
         command.Parameters.AddWithValue("@Date", data.Date);
         command.Parameters.AddWithValue("@Time", data.Time);
@@ -41,6 +42,7 @@ public class MySQLDataRepository : IDataRepository
                 Data data = new()
                 {
                     Location = reader["Location"].ToString()!,
+                    Gas = Convert.ToDouble(reader["Gas"]),
                     Date = reader["Date"].ToString()!,
                     Time = reader["Time"].ToString()!,
                     Temperature = Convert.ToDouble(reader["Temperature"]),

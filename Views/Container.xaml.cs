@@ -19,7 +19,7 @@ namespace CANSAT_UI.Views
 
             InitializeComponent();
 
-            // We define a page provider for navigation
+            // We define a page provider f or navigation
             SetPageService(pageService);
 
             navigationService.SetNavigationControl(RootNavigation);

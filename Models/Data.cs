@@ -7,5 +7,6 @@ public class Data
     public required string Time { get; set; }
     public required double Temperature { get; set; }
     public required double Humidity { get; set; }
+    public required double Gas { get; set; }
     public DateTime Timestamp { get; set; }
 }
