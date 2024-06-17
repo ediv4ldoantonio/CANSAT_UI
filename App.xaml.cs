@@ -38,27 +38,6 @@ public partial class App : Application
             // Service containing navigation, same as INavigationWindow... but without window
             services.AddSingleton<INavigationService, NavigationService>();
 
-            // Inside your service registration code (e.g., ConfigureServices method in Startup.cs)
-            services.AddSingleton<ILoggingService>(provider =>
-            {
-                // Get the base path configured in your application
-                string basePath = Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!;
-
-                // Append a relative path to the log file name (e.g., "logs/myapp.log")
-                string logFileName = "logs/app.log";
-                string logFilePath = Path.Combine(basePath, logFileName);
-
-                // Ensure that the directory exists before attempting to write the log file
-                string logDirectory = Path.GetDirectoryName(logFilePath)!;
-                if (!Directory.Exists(logDirectory))
-                {
-                    Directory.CreateDirectory(logDirectory);
-                }
-
-                // Create an instance of FileLoggingService with the constructed log file path
-                return new FileLoggingService(logFilePath);
-            });
-
             // Main window container with navigation
             services.AddScoped<INavigationWindow, Views.Container>();
             services.AddScoped<ContainerViewModel>();
@@ -74,7 +53,7 @@ public partial class App : Application
             services.AddScoped<DatabaseViewModel>();
 
             // Repositories
-            services.AddSingleton<IDataRepository, MySQLDataRepository>();
+            services.AddSingleton<MySQLDataRepository>();
         })
         .Build();
 

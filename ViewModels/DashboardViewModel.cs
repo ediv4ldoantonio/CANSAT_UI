@@ -2,14 +2,11 @@
 using CANSAT_UI.Repositories;
 using CANSAT_UI.Services.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
-using LiveCharts;
 using System.Net.Http;
 using System.Text.Json;
-using System;
 using System.Timers;
 using Timer = System.Timers.Timer;
-using System.Windows;
-using Org.BouncyCastle.Asn1.Ocsp;
+
 
 namespace CANSAT_UI.ViewModels;
 
@@ -18,38 +15,39 @@ public partial class DashboardViewModel : ViewModelBase
 {
     #region ObservableProperties
     [ObservableProperty]
-    private string location = string.Empty;
+    private string[] correntes;
 
     [ObservableProperty]
-    private string date = string.Empty;
+    private string[] potencias;
 
     [ObservableProperty]
-    private string time = string.Empty;
+    private string[] energias;
 
     [ObservableProperty]
-    private string temperature = string.Empty;
+    private bool[] estados;
 
-    [ObservableProperty]
-    private string humidity = string.Empty;
     #endregion
-
-    readonly HttpClient client = new HttpClient();
-    readonly IDataRepository dataRepository;
-
-    [ObservableProperty]
-    private ChartValues<double> temperatureValues;
+    readonly HttpClient client;
+    readonly MySQLDataRepository dataRepository;
 
     // O token do Blynk
-    const string token = "6ju-aH1fAZD97gvIwbui6qceTEWIF0Fm";
+    const string token = "kSAjm1XA1f2zwP08H-hDikqDyL8R2r_B";
 
     private readonly ISerialCommunicationService serialCommunicationService;
     private readonly Timer timer;
-    private double _humidity;
-    private double _temperature;
-    public DashboardViewModel(ISerialCommunicationService serialCommunicationService, IDataRepository dataRepository)
+
+    public DashboardViewModel(ISerialCommunicationService serialCommunicationService, MySQLDataRepository dataRepository)
     {
         this.dataRepository = dataRepository;
-        this.temperatureValues = [];
+        this.client = new HttpClient();
+
+        this.correntes = new string[3];
+        this.energias = new string[3];
+        this.potencias = new string[3];
+
+        this.estados = new bool[2];
+
+        this.serialCommunicationService = serialCommunicationService;
 
         timer = new Timer
         {
@@ -58,15 +56,32 @@ public partial class DashboardViewModel : ViewModelBase
 
         timer.Elapsed += Timer_Elapsed;
         timer.Start();
-
-        this.serialCommunicationService = serialCommunicationService;
         InitializeDataReceived();
     }
 
     private async void Timer_Elapsed(object? sender, ElapsedEventArgs e)
     {
-        await dataRepository.Create(new Data { Date = Date, Humidity = _humidity, Location = Location, Temperature = _temperature, Time = Time, Timestamp = DateTime.Now });
+        try
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                string carga = i == 0 ? "tomada" : i == 1 ? "lampada a" : "lampada b";
+
+                await dataRepository.Create(new Data()
+                {
+                    Charge = carga,
+                    Current = Correntes[i],
+                    Power = Potencias[i],
+                    Energy = Energias[i]
+                });
+            }
+        }
+        catch
+        {
+
+        }
     }
+
     private void InitializeDataReceived()
     {
         this.serialCommunicationService.DataReceived += OnDataReceived;
@@ -76,34 +91,44 @@ public partial class DashboardViewModel : ViewModelBase
     {
         try
         {
-            Models.ResponseData? responseData = JsonSerializer.Deserialize<Models.ResponseData>(data);
+            ResponseData? responseData = JsonSerializer.Deserialize<Models.ResponseData>(data);
 
             if (responseData != null)
             {
-                Location = responseData.location;
-                Temperature = $"{responseData.temperature} ºC";
-                Date = responseData.date;
-                Time = responseData.time;
-                Humidity = $"{responseData.humidity}%";
-                _humidity = responseData.humidity;
-                _temperature = responseData.temperature;
+                for (int i = 0; i < responseData.potencias.Length; i++)
+                    Potencias[i] = $"{responseData.potencias[i]} W";
 
-                TemperatureValues.Add(responseData.humidity);
-                OnPropertyChanged(nameof(TemperatureValues));
+                for (int i = 0; i < responseData.correntes.Length; i++)
+                    Correntes[i] = $"{responseData.correntes[i]} A";
 
-                string pinoVirtual1 = "v0";
-                string pinoVirtual2 = "v1";
-                string pinoVirtual3 = "v2";
+                for (int i = 0; i < responseData.energias.Length; i++)
+                    Energias[i] = $"{responseData.energias[i]} J";
 
+                OnPropertyChanged(nameof(Potencias));
+                OnPropertyChanged(nameof(Energias));
+                OnPropertyChanged(nameof(Correntes));
 
-                await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={responseData.humidity}");
-                await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={responseData.temperature}");
-                await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={responseData.location}");
+                await sendToBlynk();
             }
         }
         catch
         {
 
         }
+    }
+
+    private async Task sendToBlynk()
+    {
+        string pinoVirtual1 = "v0";
+        string pinoVirtual2 = "v1";
+        string pinoVirtual3 = "v2";
+
+        string correntes = $"{Correntes[0]}, {Correntes[1]}, {Correntes[2]}";
+        string potencias = $"{Potencias[0]}, {Potencias[1]}, {Potencias[2]}";
+        string energias = $"{Energias[0]}, {Energias[1]}, {Energias[2]}";
+
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={correntes}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={potencias}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={energias}");
     }
 }

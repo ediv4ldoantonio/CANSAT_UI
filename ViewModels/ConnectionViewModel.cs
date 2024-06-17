@@ -12,7 +12,6 @@ public partial class ConnectionViewModel : ViewModelBase
     public IEnumerable<string> BaudRatesOptions => ["4800", "9600", "14400", "19200"];
 
     private readonly ISerialCommunicationService serialCommunicationService;
-    private readonly ILoggingService loggingService;
 
     [NotifyCanExecuteChangedFor(nameof(ConnectCommand))]
     [ObservableProperty]
@@ -25,10 +24,9 @@ public partial class ConnectionViewModel : ViewModelBase
     private string? portName;
 
 
-    public ConnectionViewModel(ISerialCommunicationService serialCommunicationService, ILoggingService loggingService)
+    public ConnectionViewModel(ISerialCommunicationService serialCommunicationService)
     {
         this.serialCommunicationService = serialCommunicationService;
-        this.loggingService = loggingService;
     }
 
 

@@ -11,9 +11,9 @@ public partial class DatabaseViewModel : ViewModelBase
     [ObservableProperty]
     private ObservableCollection<Data> data;
 
-    private readonly IDataRepository dataRepository;
+    private readonly MySQLDataRepository dataRepository;
 
-    public DatabaseViewModel(IDataRepository dataRepository)
+    public DatabaseViewModel(MySQLDataRepository dataRepository)
     {
         this.dataRepository = dataRepository;
         data = [];
@@ -25,6 +25,7 @@ public partial class DatabaseViewModel : ViewModelBase
         try
         {
             IsBusy = true;
+
             var rawData = await dataRepository.Read();
 
             foreach (var item in rawData)

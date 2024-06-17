@@ -2,9 +2,8 @@
 
 public class ResponseData
 {
-    public required string location { get; set; }
-    public required string date { get; set; }
-    public required string time { get; set; }
-    public required double temperature { get; set; }
-    public required double humidity { get; set; }
+    public required string[] correntes { get; set; }
+    public required string[] energias { get; set; }
+    public required string[] potencias { get; set; }
+    public required bool[] estados { get; set; }
 }

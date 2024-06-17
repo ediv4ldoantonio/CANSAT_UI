@@ -6,21 +6,22 @@ namespace CANSAT_UI.Repositories;
 
 public class MySQLDataRepository : IDataRepository
 {
-    private const string CONNECTION_STRING = "Server=localhost;Database=cansat;Uid=dev;Pwd=dev.pass123;";
+    private const string CONNECTION_STRING = "Server=localhost;Database=consumo;Uid=dev;Pwd=dev.pass123;";
 
     public async Task Create(Data data)
     {
         using var connection = new MySqlConnection(CONNECTION_STRING);
         await connection.OpenAsync();
-        string query = "INSERT INTO data (Location, Date, Time, Temperature, Humidity, Timestamp) " +
-                       "VALUES (@Location, @Date, @Time, @Temperature, @Humidity, @Timestamp)";
+
+        string query = $"INSERT INTO dados (corrente, potencia, energia, carga, timestamp) " +
+                       "VALUES (@corrente, @potencia, @energia, @carga, @timestamp)";
+
         using MySqlCommand command = new(query, connection);
-        command.Parameters.AddWithValue("@Location", data.Location);
-        command.Parameters.AddWithValue("@Date", data.Date);
-        command.Parameters.AddWithValue("@Time", data.Time);
-        command.Parameters.AddWithValue("@Temperature", data.Temperature);
-        command.Parameters.AddWithValue("@Humidity", data.Humidity);
-        command.Parameters.AddWithValue("@Timestamp", data.Timestamp);
+        command.Parameters.AddWithValue("@corrente", data.Current);
+        command.Parameters.AddWithValue("@potencia", data.Power);
+        command.Parameters.AddWithValue("@energia", data.Energy);
+        command.Parameters.AddWithValue("@carga", data.Charge);
+        command.Parameters.AddWithValue("@timestamp", data.Timestamp);
 
         await command.ExecuteNonQueryAsync();
     }
@@ -31,7 +32,7 @@ public class MySQLDataRepository : IDataRepository
         using (var connection = new MySqlConnection(CONNECTION_STRING))
         {
             await connection.OpenAsync();
-            string query = "SELECT * FROM data";
+            string query = "SELECT * FROM dados";
 
             using MySqlCommand command = new(query, connection);
             using MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync();
@@ -40,12 +41,11 @@ public class MySQLDataRepository : IDataRepository
             {
                 Data data = new()
                 {
-                    Location = reader["Location"].ToString()!,
-                    Date = reader["Date"].ToString()!,
-                    Time = reader["Time"].ToString()!,
-                    Temperature = Convert.ToDouble(reader["Temperature"]),
-                    Humidity = Convert.ToDouble(reader["Humidity"]),
-                    Timestamp = Convert.ToDateTime(reader["Timestamp"])
+                    Charge = reader["carga"].ToString()!,
+                    Current = reader["corrente"].ToString()!,
+                    Power = reader["potencia"].ToString()!,
+                    Energy = reader["energia"].ToString()!,
+                    Timestamp = Convert.ToDateTime(reader["timestamp"])
                 };
                 dataList.Add(data);
             }

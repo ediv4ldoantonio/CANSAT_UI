@@ -2,10 +2,9 @@
 
 public class Data
 {
-    public required string Location { get; set; }
-    public required string Date { get; set; }
-    public required string Time { get; set; }
-    public required double Temperature { get; set; }
-    public required double Humidity { get; set; }
-    public DateTime Timestamp { get; set; }
+    public required string Current { get; set; }
+    public required string Power { get; set; }
+    public required string Energy { get; set; }
+    public DateTime Timestamp { get; set; } = DateTime.Now;
+    public required string Charge { get; set; }
 }
