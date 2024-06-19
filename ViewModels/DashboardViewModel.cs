@@ -86,7 +86,7 @@ public partial class DashboardViewModel : ViewModelBase
 
     private void InitializeDataReceived()
     {
-        this.serialCommunicationService.DataReceived += OnDataReceived;
+        serialCommunicationService.DataReceived += OnDataReceived;
     }
 
     private async void OnDataReceived(object? sender, string data)
@@ -128,27 +128,38 @@ public partial class DashboardViewModel : ViewModelBase
         string pinoVirtual1 = "v0";
         string pinoVirtual2 = "v1";
         string pinoVirtual3 = "v2";
+        string pinoVirtual4 = "v3";
+        string pinoVirtual5 = "v4";
 
-        string correntes = $"{Correntes[0]}, {Correntes[1]}, {Correntes[2]}";
-        string potencias = $"{Potencias[0]}, {Potencias[1]}, {Potencias[2]}";
-        string energias = $"{Energias[0]}, {Energias[1]}, {Energias[2]}";
+        string tomada = $"{Correntes[0]}, {Potencias[0]}, {Energias[0]}";
+        string lampadaA = $"{Correntes[1]}, {Potencias[1]}, {Energias[1]}";
+        string lampadaB = $"{Correntes[2]}, {Potencias[2]}, {Energias[2]}";
 
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={correntes}");
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={potencias}");
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={energias}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={tomada}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={lampadaA}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={lampadaB}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual4}={Estados[0]}");
+        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual5}={Estados[1]}");
     }
 
     [RelayCommand]
     public void ChangeState(object sender)
     {
-        ChargeControl control = (ChargeControl)sender;
+        try
+        {
+            ChargeControl control = (ChargeControl)sender;
 
-        bool value = control.IsTriggered;
-        string charge = control.Tag.ToString()!;
+            bool value = control.IsTriggered;
+            string charge = control.Tag.ToString()!;
 
-        if (charge == "A")
-            serialCommunicationService.SendData(value ? "1" : "2");
-        else if (charge == "B")
-            serialCommunicationService.SendData(value ? "3" : "4");
+            if (charge == "A")
+                serialCommunicationService.SendData(value ? "1" : "2");
+            else if (charge == "B")
+                serialCommunicationService.SendData(value ? "3" : "4");
+        }
+        catch 
+        {
+
+        }
     }
 }
