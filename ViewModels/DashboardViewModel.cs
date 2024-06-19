@@ -1,7 +1,9 @@
-﻿using CANSAT_UI.Models;
+﻿using CANSAT_UI.Controls;
+using CANSAT_UI.Models;
 using CANSAT_UI.Repositories;
 using CANSAT_UI.Services.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Net.Http;
 using System.Text.Json;
 using System.Timers;
@@ -104,9 +106,13 @@ public partial class DashboardViewModel : ViewModelBase
                 for (int i = 0; i < responseData.energias.Length; i++)
                     Energias[i] = $"{responseData.energias[i]} J";
 
+                for (int i = 0; i < responseData.estados.Length; i++)
+                    Estados[i] = responseData.estados[i];
+
                 OnPropertyChanged(nameof(Potencias));
                 OnPropertyChanged(nameof(Energias));
                 OnPropertyChanged(nameof(Correntes));
+                OnPropertyChanged(nameof(Estados));
 
                 await sendToBlynk();
             }
@@ -130,5 +136,19 @@ public partial class DashboardViewModel : ViewModelBase
         await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={correntes}");
         await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={potencias}");
         await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={energias}");
+    }
+
+    [RelayCommand]
+    public void ChangeState(object sender)
+    {
+        ChargeControl control = (ChargeControl)sender;
+
+        bool value = control.IsTriggered;
+        string charge = control.Tag.ToString()!;
+
+        if (charge == "A")
+            serialCommunicationService.SendData(value ? "1" : "2");
+        else if (charge == "B")
+            serialCommunicationService.SendData(value ? "3" : "4");
     }
 }
