@@ -2,77 +2,16 @@
 xmlns:local="clr-namespace:CANSAT_UI.Views.Pages" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:controls="clr-namespace:CANSAT_UI.Controls" xmlns:viewmodels="clr-namespace:CANSAT_UI.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:DashboardViewModel}" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800" Title="Dashboard">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Width="Auto" Margin="10" Padding="10" MinHeight="100" Background="#FF23ABE0" CornerRadius="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="Tômada" FontWeight="Bold" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0" />
-                        <ui:SymbolIcon Symbol="PlugConnected24" Foreground="White" FontSize="80" HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Correntes[0]}" FontWeight="Bold" Foreground="#FFEDDD25" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Potencias[0]}" FontWeight="Bold" Foreground="#FF75FF7D" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Energias[0]}" FontWeight="Bold" Foreground="#FFFB4ABB" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border Grid.Column="1" Width="Auto" Margin="10" Padding="10" MinHeight="100" Background="#FF23ABE0" CornerRadius="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="Lâmpada A" FontWeight="Bold" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0" />
-                        <ui:SymbolIcon Symbol="Lightbulb24" Foreground="White" FontSize="80" HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Correntes[1]}" FontWeight="Bold" Foreground="#FFEDDD25" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Potencias[1]}" FontWeight="Bold" Foreground="#FF75FF7D" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Energias[1]}" FontWeight="Bold" Foreground="#FFFB4ABB" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border Grid.Column="2" Width="Auto" Margin="10"  Padding="10" MinHeight="100" Background="#FF23ABE0" CornerRadius="10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0">
-                        <TextBlock Text="Lâmpada B" FontWeight="Bold" FontSize="20" Foreground="White" HorizontalAlignment="Center" Margin="0,10,0,0" />
-                        <ui:SymbolIcon Symbol="Lightbulb24" Foreground="White" FontSize="80" HorizontalAlignment="Center" />
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Correntes[2]}" FontWeight="Bold" Foreground="#FFEDDD25" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Potencias[2]}" FontWeight="Bold" Foreground="#FF75FF7D" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Text="{Binding Energias[2]}" FontWeight="Bold" Foreground="#FFFB4ABB" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <controls:ChargeControl x:Name="A" Grid.Column="0" Margin="100" IsTriggered="{Binding Estados[0]}" Tag="A"
-                ChangeStateCommand="{Binding ChangeStateCommand}"/>
-            <controls:ChargeControl x:Name="B" Grid.Column="1" Margin="100" IsTriggered="{Binding Estados[1]}" Tag="B" ChangeStateCommand="{Binding ChangeStateCommand}"/>
+            <controls:ChargeControl x:Name="A" Grid.Column="0" Margin="40, 100" IsTriggered="{Binding Estados[0]}" Tag="A"
+                ChangeStateCommand="{Binding ChangeStateCommand}" Label="A"/>
+            <controls:ChargeControl x:Name="B" Grid.Column="1" Margin="40, 100" IsTriggered="{Binding Estados[1]}" Tag="B" ChangeStateCommand="{Binding ChangeStateCommand}" Label="B"/>
+            <controls:ChargeControl x:Name="C" Grid.Column="2" Margin="40, 100" IsTriggered="{Binding Estados[1]}" Tag="B" ChangeStateCommand="{Binding ChangeStateCommand}" Label="C"/>
         </Grid>
     </Grid>
 </Page>

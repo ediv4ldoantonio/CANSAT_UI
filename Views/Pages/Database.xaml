@@ -15,9 +15,6 @@
             <ui:ListView.View>
                 <ui:GridView >
                     <ui:GridViewColumn Header="Carga" DisplayMemberBinding="{Binding Charge}" />
-                    <ui:GridViewColumn  Header="Energia" DisplayMemberBinding="{Binding Power}" />
-                    <ui:GridViewColumn  Header="Corrente" DisplayMemberBinding="{Binding Current}" />
-                    <ui:GridViewColumn  Header="Potência" DisplayMemberBinding="{Binding Power}" />
                     <ui:GridViewColumn Header="Data" DisplayMemberBinding="{Binding Timestamp}" />
                 </ui:GridView>
             </ui:ListView.View>

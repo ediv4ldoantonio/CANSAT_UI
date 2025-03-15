@@ -15,6 +15,9 @@ public partial class ChargeControl : UserControl
     public static readonly DependencyProperty IsTriggeredProperty =
             DependencyProperty.Register("IsTriggered", typeof(bool), typeof(ChargeControl), new PropertyMetadata(false, OnStateChanged));
 
+    public static readonly DependencyProperty LabelProperty =
+            DependencyProperty.Register("Label", typeof(string), typeof(ChargeControl), new PropertyMetadata(""));
+
     public static readonly DependencyProperty ChangeStateCommandProperty =
             DependencyProperty.Register("ChangeStateCommand", typeof(ICommand), typeof(ChargeControl));
 
@@ -28,6 +31,12 @@ public partial class ChargeControl : UserControl
     {
         get => (ICommand)GetValue(ChangeStateCommandProperty);
         set => SetValue(ChangeStateCommandProperty, value);
+    }
+
+    public string Label
+    {
+        get => (string)GetValue(LabelProperty);
+        set => SetValue(LabelProperty, value);
     }
 
     public ChargeControl()
