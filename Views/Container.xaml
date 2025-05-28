@@ -35,14 +35,14 @@
                             <ui:SymbolIcon Symbol="GridCircles24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                </ui:NavigationView.MenuItems>
-                <ui:NavigationView.FooterMenuItems>
-                    <ui:NavigationViewItem Content="Definições">
+
+                    <ui:NavigationViewItem Content="Base de Dados" 
+   TargetPageType="{x:Type pages:Database}">
                         <ui:NavigationViewItem.Icon>
-                            <ui:SymbolIcon Symbol="Settings24" />
+                            <ui:SymbolIcon Symbol="Database24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
-                </ui:NavigationView.FooterMenuItems>
+                </ui:NavigationView.MenuItems>
             </ui:NavigationView>
         </Grid>
     </Grid>

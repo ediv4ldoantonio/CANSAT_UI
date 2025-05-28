@@ -1,4 +1,5 @@
 ﻿using CANSAT_UI.Models;
+using CANSAT_UI.Repositories;
 using CANSAT_UI.Services.Contracts;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Net.Http;
@@ -13,28 +14,17 @@ public partial class DashboardViewModel : ViewModelBase
 {
     #region ObservableProperties
     [ObservableProperty]
-    private string airQuality = string.Empty;
-
-    [ObservableProperty]
-    private string humidity = string.Empty;
-
-    [ObservableProperty]
-    private string temperature = string.Empty;
-
-
+    private float[] trashLevels;
     #endregion
-    readonly HttpClient client;
-
-    // O token do Blynk
-    const string token = "Gxs-jRBc2MEKtDIRL1Up43pSYtfRu-od";
 
     private readonly ISerialCommunicationService serialCommunicationService;
+    private readonly IDataRepository dataRepository;
 
-    public DashboardViewModel(ISerialCommunicationService serialCommunicationService)
+    public DashboardViewModel(ISerialCommunicationService serialCommunicationService, IDataRepository dataRepository)
     {
-        this.client = new HttpClient();
-
+        this.trashLevels = new float[2];
         this.serialCommunicationService = serialCommunicationService;
+        this.dataRepository = dataRepository;
 
         InitializeDataReceived();
     }
@@ -52,15 +42,14 @@ public partial class DashboardViewModel : ViewModelBase
 
             if (responseData != null)
             {
-                Humidity = $"{responseData.humidity}%";
-                AirQuality = $"{responseData.airQuality * 100 / 1023}%"; ;
-                Temperature = $"{responseData.temperature} ºC";
+                for (int i = 0; i < responseData.trashLevels.Length; i++)
+                {
+                    TrashLevels[i] = responseData.trashLevels[i];
+                }
 
-                OnPropertyChanged(nameof(Humidity));
-                OnPropertyChanged(nameof(AirQuality));
-                OnPropertyChanged(nameof(Temperature));
+                OnPropertyChanged(nameof(TrashLevels));
 
-                await sendToBlynk();
+                await SaveToDatabase();
             }
         }
         catch
@@ -69,15 +58,11 @@ public partial class DashboardViewModel : ViewModelBase
         }
     }
 
-    private async Task sendToBlynk()
+    private async Task SaveToDatabase()
     {
-        string pinoVirtual1 = "v0";
-        string pinoVirtual2 = "v1";
-        string pinoVirtual3 = "v2";
-
-
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual1}={Humidity}");
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual2}={Temperature}");
-        await client.GetAsync($"https://blynk.cloud/external/api/update?token={token}&{pinoVirtual3}={AirQuality}");
+        for (int i = 0; i < TrashLevels.Length; i++)
+        {
+            await dataRepository.Create(new Data { Level = TrashLevels[i], Number = i + 1, Timestamp = DateTime.Now });
+        }
     }
 }

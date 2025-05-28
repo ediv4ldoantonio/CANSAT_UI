@@ -2,7 +2,5 @@
 
 public class ResponseData
 {
-    public float humidity { get; set; }
-    public float temperature { get; set; }
-    public float airQuality { get; set; }
+    public required float[] trashLevels { get; set; }
 }

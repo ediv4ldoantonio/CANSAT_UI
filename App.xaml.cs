@@ -9,6 +9,7 @@ using Wpf.Ui;
 using CANSAT_UI.Services.Contracts;
 using System.IO.Ports;
 using CANSAT_UI.ViewModels;
+using CANSAT_UI.Repositories;
 
 namespace CANSAT_UI;
 
@@ -32,6 +33,7 @@ public partial class App : Application
 
             // Serial communication service
             services.AddSingleton<ISerialCommunicationService, SerialCommunicationService>();
+            services.AddSingleton<IDataRepository, MySQLDataRepository>();
             services.AddSingleton<SerialPort>();
 
             // Service containing navigation, same as INavigationWindow... but without window
@@ -68,6 +70,9 @@ public partial class App : Application
 
             services.AddScoped<Views.Pages.Dashboard>();
             services.AddScoped<DashboardViewModel>();
+
+            services.AddScoped<Views.Pages.Database>();
+            services.AddScoped<DatabaseViewModel>();
 
         })
         .Build();
