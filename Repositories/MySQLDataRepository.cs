@@ -25,7 +25,13 @@ public class MySQLDataRepository : IDataRepository
                     recorded_at TEXT,                   
                     number INTEGER,
                     value REAL
-                )";
+                );
+                CREATE TABLE alerts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    message TEXT,                   
+                    created_at TEXT
+            );";
+
             using var cmd = new SQLiteCommand(createTable, conn);
 
             cmd.ExecuteNonQuery();
@@ -80,5 +86,53 @@ public class MySQLDataRepository : IDataRepository
         }
 
         return dataList;
+    }
+
+
+    public async Task CreateAlert(Alert alert)
+    {
+        // Insert DateTime and double
+        using var conn = new SQLiteConnection($"Data Source={DB_FILE};Version=3;");
+
+        conn.Open();
+
+        var insert = "INSERT INTO alerts (message, created_at) VALUES (@message, @time)";
+
+        using var cmd = new SQLiteCommand(insert, conn);
+        cmd.Parameters.AddWithValue("@time", alert.Timestamp.ToString("o")); // ISO 8601 format
+        cmd.Parameters.AddWithValue("@message", alert.Message);
+
+        await cmd.ExecuteNonQueryAsync();
+    }
+
+    public async Task<List<Alert>> ReadAlert()
+    {
+        List<Alert> alertList = [];
+
+        using var conn = new SQLiteConnection($"Data Source={DB_FILE};Version=3;");
+
+        conn.Open();
+
+        // Read back
+        var select = "SELECT created_at, message FROM alerts";
+        using var readCmd = new SQLiteCommand(select, conn);
+        using var reader = readCmd.ExecuteReader();
+
+        while (await reader.ReadAsync())
+        {
+            var dateStr = reader["created_at"].ToString();
+            var parsedDate = DateTime.Parse(dateStr!, null, DateTimeStyles.RoundtripKind);
+            var message = Convert.ToString(reader["message"]);
+
+            Alert alert = new()
+            {
+                Message = message!,
+                Timestamp = parsedDate,
+            };
+
+            alertList.Add(alert);
+        }
+
+        return alertList;
     }
 }

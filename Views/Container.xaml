@@ -42,6 +42,13 @@
                             <ui:SymbolIcon Symbol="Database24" />
                         </ui:NavigationViewItem.Icon>
                     </ui:NavigationViewItem>
+
+                    <ui:NavigationViewItem Content="Alertas" 
+TargetPageType="{x:Type pages:Alerts}">
+                        <ui:NavigationViewItem.Icon>
+                            <ui:SymbolIcon Symbol="Warning24" />
+                        </ui:NavigationViewItem.Icon>
+                    </ui:NavigationViewItem>
                 </ui:NavigationView.MenuItems>
             </ui:NavigationView>
         </Grid>

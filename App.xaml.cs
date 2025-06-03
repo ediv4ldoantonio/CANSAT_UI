@@ -74,6 +74,9 @@ public partial class App : Application
             services.AddScoped<Views.Pages.Database>();
             services.AddScoped<DatabaseViewModel>();
 
+            services.AddScoped<Views.Pages.Alerts>();
+            services.AddScoped<AlertsViewModel>();
+
         })
         .Build();
 
